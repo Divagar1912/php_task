@@ -1,0 +1,51 @@
+
+package php.php;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+public class Formpage {
+
+    public static void main(String[] args) {
+
+        System.setProperty("webdriver.chrome.driver", "D:\\java exercise\\php\\driver\\chromedriver.exe");
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://phptravels.com/demo/");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
+        nameInput.sendKeys("Divagar Velusamy");
+
+        WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email")));
+        emailInput.sendKeys("divagar.v@example.com");
+
+        WebElement sumInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("sum")));
+        int num1 = 10;
+        int num2 = 20;
+        sumInput.sendKeys(String.valueOf(num1 + num2));
+
+        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='submit']")));
+        submitButton.click();
+
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alert alert-success']")));
+        String actualMessage = successMessage.getText();
+        String expectedMessage = "Form submitted successfully";
+
+        if (actualMessage.equals(expectedMessage)) {
+            System.out.println("Form submitted successfully");
+        } else {
+            System.out.println("Form submission failed");
+        }
+
+        driver.quit();
+    }
+}
